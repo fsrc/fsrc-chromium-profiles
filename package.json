@@ -20,7 +20,8 @@
   "author": "Fredrik Andersson",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "prelude-ls": "^1.1.2"
+    "prelude-ls": "^1.1.2",
+    "fsrc-config": "^1.0.0"
   },
   "devDependencies": {
     "livescript": "^1.6.0"
