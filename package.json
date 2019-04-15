@@ -1,5 +1,5 @@
 {
-  "name": "chromium-profiles",
+  "name": "fsrc-chromium-profiles",
   "version": "0.0.1",
   "description": "Lists and starts available Chromium profiles",
   "main": "./dist/index.js",
