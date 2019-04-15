@@ -3,7 +3,18 @@ require! {
   \path          : { join }
   \prelude-ls    : { tail, any, drop, obj-to-pairs, find, map, keys, values }
   \child_process : { spawn }
+  'fsrc-config' : fsrc-config
 }
+
+config = fsrc-config(
+  \chromium-profiles,
+  {
+    "dmenu" : {
+      "cmd": "rofi",
+      "args": ["-dmenu"]
+    },
+    "debug": false
+  })
 
 say = console.log
 
@@ -74,9 +85,9 @@ has-value = (args-list, name) ->
       |> tail
       t.join("=")
 
-dmenu = (alternatives, dmenu-arguments, callback) ->
+dmenu = (alternatives, callback) ->
 
-  cp = spawn('dmenu', dmenu-arguments)
+  cp = spawn(config.dmenu.cmd, config.dmenu.args)
   cp.stdin.write(alternatives.join(\\n))
   cp.stdin.end()
   cp.stdout.on('data', (data) ->
@@ -97,23 +108,23 @@ args =
 args.path = PATH if not args.path?
 
 if args.help
-  say """Usage: chromium-profiles [--path=<~/.config/chromium>] [--open | --open=<profile name>] [--dmenu=<dmenu arguments>] [--list] [--help]
+  say """Usage: chromium-profiles [--path=<~/.config/chromium>] [--open | --open=<profile name>] [--dmenu] [--list] [--help]
 
 Arguments:
   --path=            Define the path where the 'Local State' file is located. Defaults to '~/.config/chromium'.
   --open= | --open   Define what profile to open and open it. Or open whatever profile selected when --list --dmenu.
-  --dmenu=           Use dmenu to make a choice. Assign a JSON array to pass arguments to dmenu.
+  --dmenu            Use dmenu to make a choice.
   --list             List profiles available.
   --help             This info.
 
 Examples:
-  chromium-profiles --list --dmenu=[] --open   # Will list profiles in dmenu and open the selected in chromium.
+  chromium-profiles --list --dmenu --open   # Will list profiles in dmenu and open the selected in chromium.
   chromium-profiles --list                     # Will list profiles in stdout
   chromium-profiles --open="Profile 1"         # Will open profile 1 in chromium.
 
 Advanced example, passing arguments to dmenu:
 
-  chromium-profiles --list --open --dmenu='["-p", "Chromium", "-fn", "Liberation Mono:pixelsize=12", "-nb", "#2c001e", "-nf", "\#aea79f", "-sf", "\#ffffff", "-sb", "\#dd4814"]'
+  chromium-profiles --list --open --dmenu
 
   """
   process.exit(0)
@@ -124,9 +135,7 @@ if args.list
   if-err(err)
   # AND --dmenu
   if args.dmenu?
-    dmenu-arguments = JSON.parse(args.dmenu)
-
-    alternative  <- dmenu usernames, dmenu-arguments
+    alternative  <- dmenu usernames
     err, profile <- profile-for-username PATH, alternative.replace(/\n$/, "")
     if-err(err)
 

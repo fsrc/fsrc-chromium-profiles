@@ -1,10 +1,13 @@
 {
   "name": "chromium-profiles",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Lists and starts available Chromium profiles",
-  "main": "index.js",
+  "main": "./dist/index.js",
+  "bin": {
+    "rse": "./bin/chromium-profiles"
+  },
   "scripts": {
-    "build": "echo \"Error: no build specified\" && exit 1"
+    "prepare": "lsc -cp ./src/index.ls > dist/index.js"
   },
   "repository": {
     "type": "git",
@@ -19,11 +22,16 @@
   ],
   "author": "Fredrik Andersson",
   "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/fsrc/fsrc-chromium-profiles/issues"
+  },
+  "homepage": "https://github.com/fsrc/fsrc-chromium-profiles#readme",
   "dependencies": {
     "prelude-ls": "^1.1.2",
-    "fsrc-config": "^1.0.0"
+    "fsrc-config": "^0.0.2"
   },
   "devDependencies": {
-    "livescript": "^1.6.0"
+    "livescript": "^1.6.0",
+    "fsrc-config": "file:../config"
   }
 }
