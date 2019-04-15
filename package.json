@@ -1,10 +1,10 @@
 {
   "name": "fsrc-chromium-profiles",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Lists and starts available Chromium profiles",
   "main": "./dist/index.js",
   "bin": {
-    "rse": "./bin/chromium-profiles"
+    "chromium-profiles": "./bin/chromium-profiles"
   },
   "scripts": {
     "prepare": "lsc -cp ./src/index.ls > dist/index.js"
