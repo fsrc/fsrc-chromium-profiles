@@ -1,7 +1,7 @@
 require! {
   \fs            : { read-file }
   \path          : { join }
-  \prelude-ls    : { tail, any, drop, obj-to-pairs, find, map, keys, values }
+  \prelude-ls    : { tail, any, drop, obj-to-pairs, find, fold, map, keys, values }
   \child_process : { spawn }
   'fsrc-config' : fsrc-config
 }
@@ -61,7 +61,7 @@ profile-for-username = (path, username, callback) ->
 
 
 open-chromium-with-profile = (profile) ->
-  spawn("chromium", ["--profile-directory=#{profile}"], {
+  spawn(config.browsers.0['cmd'], ["--profile-directory=#{profile}"], {
     detached: true
     stdio: \ignore
   }).unref!
@@ -95,7 +95,14 @@ dmenu = (alternatives, callback) ->
 
 args-list = process.argv |> drop 2
 
-PATH = "#{process.env.HOME}/.config/chromium"
+# PATH = "#{process.env.HOME}/.config/chromium"
+PATH = config.browsers.0['profiles-path']
+
+interpolate = (output, key) -> output.replace("$"+key, process.env[key])
+
+PATH = process.env
+|> keys
+|> fold interpolate, PATH
 
 args =
   list    : is-given(args-list, \--list)

@@ -27,8 +27,9 @@
   },
   "homepage": "https://github.com/fsrc/fsrc-chromium-profiles#readme",
   "dependencies": {
-    "prelude-ls": "^1.1.2",
-    "fsrc-config": "^0.0.2"
+    "bluebird": "^3.5.4",
+    "fsrc-config": "^0.0.2",
+    "prelude-ls": "^1.1.2"
   },
   "devDependencies": {
     "livescript": "^1.6.0",
